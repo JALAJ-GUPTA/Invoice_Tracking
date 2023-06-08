@@ -69,7 +69,7 @@ class RequestStatusUpdateAPI(views.APIView):
         request.status = data['status']
         try:
             request.save()
-            return Response({"message":f"Request status updated to {status} successfully"},status=status.HTTP_200_OK)
+            return Response({"message":f"Request status updated to {data['status']} successfully"},status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"message":f"Could not update request status because: {str(e)}"},status=status.HTTP_400_BAD_REQUEST)
 
