@@ -47,7 +47,29 @@ class InvoiceSubmissionAPI(views.APIView):
             with transaction.atomic():
                 invoice = Invoice.objects.create(employee = emp.first(),date_of_invoice = invoice_date,category = category,total_amount=total_amount,way_of_payment = wop,**data)
                 request = Request.objects.create(submission_date = submission_date,invoice=invoice)
-                return Response({"message":"Request submission succesful"},status=status.HTTP_201_CREATED)
+                return Response({"message":"Request submission successful"},status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({"message":f"Could not create invoice because: {str(e)}"},status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class RequestStatusUpdateAPI(views.APIView):
+
+    def post(self,request):
+
+        data = request.data
+        if 'request_id' not in data:
+            return Response({"message":"request_id not provided"},status=status.HTTP_400_BAD_REQUEST)
+        request = Request.objects.filter(id = data['request_id'])
+        if not request.exists():
+            return Response({"message":"Invalid Request Id provided"},status=status.HTTP_400_BAD_REQUEST)
+        request = request.first()
+        if 'status' not in data:
+            return Response({"message":"status not provided"},status=status.HTTP_400_BAD_REQUEST)
+        request.status = data['status']
+        try:
+            request.save()
+            return Response({"message":f"Request status updated to {status} successfully"},status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message":f"Could not update request status because: {str(e)}"},status=status.HTTP_400_BAD_REQUEST)
 
