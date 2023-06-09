@@ -15,5 +15,5 @@ class RequestListSerializer(serializers.ModelSerializer):
     invoice = InvoiceSerializer()
     class Meta:
         model = Request
-        fields = ('invoice','id','submission_date','status')
+        fields = ('invoice','id','submission_date','status','remarks')
 
