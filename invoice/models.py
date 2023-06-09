@@ -27,7 +27,7 @@ payment_choice =[
 ]
 
 class Invoice(models.Model):
-    date_of_invoice = models.DateTimeField(null=True)
+    date_of_invoice = models.CharField(null=True)
     category = models.CharField(max_length=20,choices=invoice_choice)
     total_amount = models.DecimalField(max_digits=10,decimal_places=2)
     employee = models.ForeignKey("Employee",related_name="invoices",on_delete=models.CASCADE)
