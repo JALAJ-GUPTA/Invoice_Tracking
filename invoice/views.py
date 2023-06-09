@@ -67,6 +67,10 @@ class RequestStatusUpdateAPI(views.APIView):
         if 'status' not in data:
             return Response({"message":"status not provided"},status=status.HTTP_400_BAD_REQUEST)
         request.status = data['status']
+        if 'remarks' in data:
+            request.remarks = data['remarks']
+
+
         try:
             request.save()
             return Response({"message":f"Request status updated to {data['status']} successfully"},status=status.HTTP_200_OK)
