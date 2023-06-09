@@ -24,6 +24,10 @@ class PendingRecordListAPI(generics.ListAPIView):
     serializer_class = RequestListSerializer
     queryset = Request.objects.filter(status = "Pending")
 
+    def list(self, request) :
+        data=super().list(request).data
+        return Response({"pending records" : data})
+
 class InvoiceSubmissionAPI(views.APIView):
 
     def post(self,request):
