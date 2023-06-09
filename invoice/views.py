@@ -14,6 +14,10 @@ class RecordListAPI(generics.ListAPIView):
     serializer_class = RequestListSerializer
     queryset = Request.objects.all()
 
+    def list(self, request) :
+        data=super().list(request).data
+        return Response({"records" : data})
+
 class PendingRecordListAPI(generics.ListAPIView):
 
     authentication_classes = []
