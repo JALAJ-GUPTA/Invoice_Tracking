@@ -26,7 +26,7 @@ class PendingRecordListAPI(generics.ListAPIView):
 
     def list(self, request) :
         data=super().list(request).data
-        return Response({"pending records" : data})
+        return Response({"pending_records" : data})
 
 class InvoiceSubmissionAPI(views.APIView):
 
